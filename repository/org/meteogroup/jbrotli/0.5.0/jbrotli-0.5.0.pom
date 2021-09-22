@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.meteogroup.jbrotli</groupId>
+  <artifactId>jbrotli</artifactId>
+  <packaging>jar</packaging>
+  <version>0.5.0</version>
+
+  <description>Java bindings for Brotli: a new compression algorithm for the internet.</description>
+  <url>https://github.com/MeteoGroup/jbrotli</url>
+
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <version.jbrotli.native>0.5.0</version.jbrotli.native>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>win32-x86-amd64</id>
+      <activation>
+        <os>
+          <family>Windows</family>
+          <arch>amd64</arch>
+        </os>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.meteogroup.jbrotli</groupId>
+          <artifactId>jbrotli-native-win32-x86-amd64</artifactId>
+          <version>${version.jbrotli.native}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>win32-x86</id>
+      <activation>
+        <os>
+          <family>Windows</family>
+          <arch>x86</arch>
+        </os>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.meteogroup.jbrotli</groupId>
+          <artifactId>jbrotli-native-win32-x86</artifactId>
+          <version>${version.jbrotli.native}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>darwin-x86-amd64</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.meteogroup.jbrotli</groupId>
+          <artifactId>jbrotli-native-darwin-x86-amd64</artifactId>
+          <version>${version.jbrotli.native}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>linux-x86-amd64</id>
+      <activation>
+        <os>
+          <family>unix</family>
+          <arch>amd64</arch>
+        </os>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.meteogroup.jbrotli</groupId>
+          <artifactId>jbrotli-native-linux-x86-amd64</artifactId>
+          <version>${version.jbrotli.native}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>linux-x86</id>
+      <activation>
+        <os>
+          <family>unix</family>
+          <arch>x86</arch>
+        </os>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.meteogroup.jbrotli</groupId>
+          <artifactId>jbrotli-native-linux-x86</artifactId>
+          <version>${version.jbrotli.native}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>linux-arm32-vfp-hflt</id>
+      <activation>
+        <os>
+          <family>unix</family>
+          <arch>arm</arch>
+        </os>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.meteogroup.jbrotli</groupId>
+          <artifactId>jbrotli-native-linux-arm32-vfp-hflt</artifactId>
+          <version>${version.jbrotli.native}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+
+          <plugin>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.4</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.10.3</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>sign</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+  </profiles>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>6.9.10</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>2.2.0</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <scm>
+    <url>scm:git:git@github.com:MeteoGroup/jbrotli.git</url>
+    <connection>scm:git:git@github.com:MeteoGroup/jbrotli.git</connection>
+    <developerConnection>scm:git:git@github.com:MeteoGroup/jbrotli.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Martin W. Kirst</name>
+      <email>maki@bitkings.de</email>
+      <url>https://github.com/nitram509</url>
+    </developer>
+  </developers>
+
+  <distributionManagement>
+    <repository>
+      <id>bintray-nitram509-jbrotli</id>
+      <url>https://api.bintray.com/maven/nitram509/jbrotli/jbrotli/;publish=1</url>
+    </repository>
+  </distributionManagement>
+
+</project>
